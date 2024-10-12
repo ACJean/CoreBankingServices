@@ -5,6 +5,8 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: http://+:80
+      ConnectionStrings__DefaultConnection: "Server=host.docker.internal;Initial Catalog=BankingSystem;Persist Security Info=False;User ID=sa;Password=123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Connection Timeout=60;"
+      InternalServices__CustomerService: "http://host.docker.internal:5001"
     ports:
       - "5002:80"
     networks:
@@ -14,6 +16,7 @@ services:
     environment:
       ASPNETCORE_ENVIRONMENT: Development
       ASPNETCORE_URLS: http://+:80
+      ConnectionStrings__DefaultConnection: "Server=host.docker.internal;Initial Catalog=BankingSystem;Persist Security Info=False;User ID=sa;Password=123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Connection Timeout=60;"
     ports:
       - "5001:80"
     networks:

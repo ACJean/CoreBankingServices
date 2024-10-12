@@ -1,0 +1,329 @@
+{
+	"info": {
+		"_postman_id": "7fa68c47-5f2a-4017-bde7-32fbb4117d20",
+		"name": "BANKING SERVICES",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27662478"
+	},
+	"item": [
+		{
+			"name": "Account",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"customerIdentity\": \"1726410530\",\r\n  \"type\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}:{{ACCOUNT_SERVICE_PORT}}/cuentas",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"port": "{{ACCOUNT_SERVICE_PORT}}",
+							"path": [
+								"cuentas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}:{{ACCOUNT_SERVICE_PORT}}/cuentas/41c9c60385",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"port": "{{ACCOUNT_SERVICE_PORT}}",
+							"path": [
+								"cuentas",
+								"41c9c60385"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"number\": \"747965985e\",\r\n    \"customerIdentity\": \"1726410530\",\r\n    \"type\": 2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}:{{ACCOUNT_SERVICE_PORT}}/cuentas/41c9c60385",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"port": "{{ACCOUNT_SERVICE_PORT}}",
+							"path": [
+								"cuentas",
+								"41c9c60385"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}:{{ACCOUNT_SERVICE_PORT}}/cuentas/41c9c60385",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"port": "{{ACCOUNT_SERVICE_PORT}}",
+							"path": [
+								"cuentas",
+								"41c9c60385"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Movements",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"amount\": 20,\r\n  \"accountNumber\": \"41c9c60385\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}:{{ACCOUNT_SERVICE_PORT}}/movimientos",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"port": "{{ACCOUNT_SERVICE_PORT}}",
+							"path": [
+								"movimientos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}:{{ACCOUNT_SERVICE_PORT}}/movimientos/3",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"port": "{{ACCOUNT_SERVICE_PORT}}",
+							"path": [
+								"movimientos",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Customer",
+			"item": [
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"José Lema\",\r\n  \"gender\": \"Masculino\",\r\n  \"age\": 29,\r\n  \"identityNumber\": \"1726410530\",\r\n  \"address\": \"Otavalo sn y principal\",\r\n  \"phoneNumber\": \"098254785\",\r\n  \"password\": \"1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}:{{CUSTOMER_SERVICE_PORT}}/clientes",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"port": "{{CUSTOMER_SERVICE_PORT}}",
+							"path": [
+								"clientes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}:{{CUSTOMER_SERVICE_PORT}}/clientes/1726410530",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"port": "{{CUSTOMER_SERVICE_PORT}}",
+							"path": [
+								"clientes",
+								"1726410530"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"customerId\": 2,\r\n    \"password\": \"TEST1234\",\r\n    \"state\": 0,\r\n    \"personId\": 2,\r\n    \"name\": \"José Lema\",\r\n    \"gender\": \"Masculino\",\r\n    \"age\": 29,\r\n    \"identityNumber\": \"1726410530\",\r\n    \"address\": \"Otavalo sn y principal\",\r\n    \"phoneNumber\": \"098254785\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}:{{CUSTOMER_SERVICE_PORT}}/clientes/1726410530",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"port": "{{CUSTOMER_SERVICE_PORT}}",
+							"path": [
+								"clientes",
+								"1726410530"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}:{{CUSTOMER_SERVICE_PORT}}/clientes/1726410530",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"port": "{{CUSTOMER_SERVICE_PORT}}",
+							"path": [
+								"clientes",
+								"1726410530"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Report",
+			"item": [
+				{
+					"name": "Account Movements",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}:{{ACCOUNT_SERVICE_PORT}}/reportes?startDate=10-10-2024&endDate=12-10-2024",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"port": "{{ACCOUNT_SERVICE_PORT}}",
+							"path": [
+								"reportes"
+							],
+							"query": [
+								{
+									"key": "startDate",
+									"value": "10-10-2024"
+								},
+								{
+									"key": "endDate",
+									"value": "12-10-2024"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "BASE_URL",
+			"value": "http://localhost",
+			"type": "string"
+		},
+		{
+			"key": "CUSTOMER_SERVICE_PORT",
+			"value": "5001",
+			"type": "string"
+		},
+		{
+			"key": "ACCOUNT_SERVICE_PORT",
+			"value": "5002",
+			"type": "string"
+		}
+	]
+}
