@@ -108,5 +108,27 @@ namespace AccountOperations.Infrastructure.EF.Repository
             _context.Set<DbMovements>().Update(dbMovement);
             _context.SaveChanges();
         }
+
+        public async Task<List<AccountMovement>> GetAccountsMovementsAsync(DateTime startDate, DateTime endDate)
+        {
+            List<DbMovements> accounts = await _context.Movements
+                .Include(m => m.Account)
+                .AsNoTracking()
+                .Where(m => m.Date >= startDate && m.Date <= endDate)
+                .ToListAsync();
+
+            return accounts.Select(movement => new AccountMovement
+            {
+                Date = movement.Date,
+                CustomerIdentity = movement.Account.CustomerIdentity,
+                AccountNumber = movement.Account.Number,
+                Type = movement.Type,
+                InitialBalance = movement.Balance,
+                State = movement.Account.State,
+                MovementAmount = movement.Amount,
+                TotalBalance = movement.Balance + movement.Amount
+            }).ToList();
+        }
+
     }
 }

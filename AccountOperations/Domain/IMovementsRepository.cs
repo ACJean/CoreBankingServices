@@ -10,7 +10,7 @@ namespace AccountOperations.Domain
     public interface IMovementsRepository : IRepository<Movements, int>
     {
 
-
+        Task<List<AccountMovement>> GetAccountsMovementsAsync(DateTime startDate, DateTime endDate);
 
     }
 }

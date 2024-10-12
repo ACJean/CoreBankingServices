@@ -4,6 +4,8 @@ using AccountOperations.Infrastructure.EF;
 using AccountTransactionService.Filters;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SharedOperations.Domain;
+using SharedOperations.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,9 +28,11 @@ builder.Services.AddDbContext<AccountDbContext>(options =>
 });
 
 builder.Services.AddScoped<IAccountUnitOfWork, AccountUnitOfWork>();
+builder.Services.AddTransient<ICustomerResources, HttpCustomerResources>();
 
 builder.Services.AddScoped<AccountService>();
 builder.Services.AddScoped<MovementsService>();
+builder.Services.AddScoped<ReportService>();
 
 // Configuración de clientes http a Microservicios
 builder.Services.AddHttpClient("CustomerService", client =>

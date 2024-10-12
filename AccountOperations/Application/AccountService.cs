@@ -1,5 +1,6 @@
 ﻿using AccountOperations.Domain;
 using Microsoft.Extensions.Logging;
+using SharedOperations.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,13 +15,13 @@ namespace AccountOperations.Application
 
         private readonly ILogger<AccountService> _logger;
         private readonly IAccountUnitOfWork _unitOfWork;
-        private readonly IHttpClientFactory _httpClientFactory;
+        private readonly ICustomerResources _customerResources;
 
-        public AccountService(ILogger<AccountService> logger, IAccountUnitOfWork unitOfWork, IHttpClientFactory httpClientFactory)
+        public AccountService(ILogger<AccountService> logger, IAccountUnitOfWork unitOfWork, ICustomerResources customerResources)
         {
             _logger = logger;
             _unitOfWork = unitOfWork;
-            _httpClientFactory = httpClientFactory;
+            _customerResources = customerResources;
         }
 
 
@@ -28,11 +29,8 @@ namespace AccountOperations.Application
         {
             try
             {
-                var client = _httpClientFactory.CreateClient("CustomerService");
-
-                var response = await client.GetAsync($"/clientes/{account.CustomerIdentity}");
-                
-                if (!response.IsSuccessStatusCode || (response.IsSuccessStatusCode && response.StatusCode == HttpStatusCode.NoContent))
+                bool customerExist = await _customerResources.IsExist(account.CustomerIdentity);
+                if (!customerExist)
                 {
                     throw new InvalidOperationException("Customer not found.");
                 }
