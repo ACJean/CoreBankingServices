@@ -1,0 +1,25 @@
+version: '3.4'
+
+services:
+  accounttransactionservice:
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:80
+    ports:
+      - "5002:80"
+    networks:
+      - apis-network
+
+  customerprofileservice:
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:80
+    ports:
+      - "5001:80"
+    networks:
+      - apis-network
+
+networks:
+  apis-network:
+    driver: bridge
+
