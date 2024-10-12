@@ -42,9 +42,9 @@ namespace AccountOperations.Application
 
                 _unitOfWork.Account.Add(account);
             }
-            catch (OperationCanceledException ex)
+            catch (Exception ex)
             {
-                _logger.LogError(ex, "Error on create customer.");
+                _logger.LogError(ex, "Error on create account.");
                 throw;
             }
         }
@@ -55,22 +55,30 @@ namespace AccountOperations.Application
             {
                 return _unitOfWork.Account.GetById(accountNumber);
             }
-            catch (OperationCanceledException ex)
+            catch (Exception ex)
             {
-                _logger.LogError(ex, "Error on get customer.");
+                _logger.LogError(ex, "Error on get account.");
                 throw;
             }
         }
 
-        public void Update(Account account)
+        public async Task Update(string accountNumber, Account account)
         {
             try
             {
+                account.Number = accountNumber;
+
+                bool customerExist = await _customerResources.IsExist(account.CustomerIdentity);
+                if (!customerExist)
+                {
+                    throw new InvalidOperationException("Customer not found.");
+                }
+
                 _unitOfWork.Account.Update(account);
             }
-            catch (OperationCanceledException ex)
+            catch (Exception ex)
             {
-                _logger.LogError(ex, "Error on update customer.");
+                _logger.LogError(ex, "Error on update account.");
                 throw;
             }
         }
@@ -79,11 +87,13 @@ namespace AccountOperations.Application
         {
             try
             {
-                _unitOfWork.Account.Delete(new Account { Number = accountNumber });
+                Account? account = Get(accountNumber) ?? throw new InvalidOperationException($"Account not found.");
+                account.State = 0;
+                _unitOfWork.Account.Update(account);
             }
-            catch (OperationCanceledException ex)
+            catch (Exception ex)
             {
-                _logger.LogError(ex, "Error on delete customer.");
+                _logger.LogError(ex, "Error on delete account.");
                 throw;
             }
         }

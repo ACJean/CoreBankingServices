@@ -1,4 +1,5 @@
 ﻿using CustomerOperations.Domain;
+using CustomerOperations.Infrastructure.EF.Model;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -78,17 +79,16 @@ namespace CustomerOperations.Application
             }
         }
 
-        public void Delete(int id)
+        public void Delete(string identityNumber)
         {
             try
             {
-                _unitOfWork.Customers.Delete(new Customer { CustomerId = id });
-                _unitOfWork.Complete();
+                Customer? customer = Get(identityNumber) ?? throw new InvalidOperationException($"Customer not found.");
+                customer.State = 0;
+                _unitOfWork.Customers.Update(customer);
             }
             catch (Exception ex)
             {
-                _unitOfWork.Rollback();
-
                 _logger.LogError(ex, "Error on delete customer.");
                 throw;
             }

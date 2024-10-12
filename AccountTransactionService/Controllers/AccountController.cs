@@ -23,7 +23,9 @@ namespace AccountTransactionService.Controllers
         {
             await _accountService.Add(account);
 
-            return Ok();
+            var resourceUrl = $"/cuentas/{account.Number}";
+
+            return Created(resourceUrl, null);
         }
 
         [HttpGet("{accountNumber}")]
@@ -33,9 +35,9 @@ namespace AccountTransactionService.Controllers
         }
 
         [HttpPut("{accountNumber}")]
-        public IActionResult Update([FromRoute] string accountNumber, [FromBody] Account account)
+        public async Task<IActionResult> Update([FromRoute] string accountNumber, [FromBody] Account account)
         {
-            _accountService.Update(account);
+            await _accountService.Update(accountNumber, account);
 
             return Ok();
         }

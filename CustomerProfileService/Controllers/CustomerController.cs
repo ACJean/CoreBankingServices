@@ -25,7 +25,9 @@ namespace CustomerProfileService.Controllers
         {
             _customerService.Add(customer);
 
-            return Ok();
+            var resourceUrl = $"/clientes/{customer.IdentityNumber}";
+
+            return Created(resourceUrl, null);
         }
 
         [HttpGet("{identityNumber}")]
@@ -34,18 +36,18 @@ namespace CustomerProfileService.Controllers
             return Ok(_customerService.Get(identityNumber));
         }
 
-        [HttpPut("{id}")]
-        public IActionResult Update([FromRoute] int id, [FromBody] Customer customer)
+        [HttpPut("{identityNumber}")]
+        public IActionResult Update([FromRoute] string identityNumber, [FromBody] Customer customer)
         {
             _customerService.Update(customer);
 
             return Ok();
         }
 
-        [HttpDelete("{id}")]
-        public IActionResult Delete([FromRoute] int id)
+        [HttpDelete("{identityNumber}")]
+        public IActionResult Delete([FromRoute] string identityNumber)
         {
-            _customerService.Delete(id);
+            _customerService.Delete(identityNumber);
 
             return Ok();
         }

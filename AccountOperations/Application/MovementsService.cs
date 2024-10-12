@@ -38,14 +38,15 @@ namespace AccountOperations.Application
                 movement.Date = DateTime.Now;
                 movement.Type = account.Type;
                 movement.Balance = account.Balance;
-                _unitOfWork.Movements.Add(movement);
+                int id = _unitOfWork.Movements.Add(movement);
+                movement.Id = id;
 
                 account.Balance += movement.Amount;
                 _unitOfWork.Account.Update(account);
 
                 _unitOfWork.Commit();
             }
-            catch (OperationCanceledException ex)
+            catch (Exception ex)
             {
                 _unitOfWork.Rollback();
                 _logger.LogError(ex, "Error on create movement.");
@@ -59,35 +60,9 @@ namespace AccountOperations.Application
             {
                 return _unitOfWork.Movements.GetById(id);
             }
-            catch (OperationCanceledException ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex, "Error on get movement.");
-                throw;
-            }
-        }
-
-        public void Update(Movements movement)
-        {
-            try
-            {
-                _unitOfWork.Movements.Update(movement);
-            }
-            catch (OperationCanceledException ex)
-            {
-                _logger.LogError(ex, "Error on update movement.");
-                throw;
-            }
-        }
-
-        public void Delete(int id)
-        {
-            try
-            {
-                _unitOfWork.Movements.Delete(new Movements { Id = id });
-            }
-            catch (OperationCanceledException ex)
-            {
-                _logger.LogError(ex, "Error on delete movement.");
                 throw;
             }
         }

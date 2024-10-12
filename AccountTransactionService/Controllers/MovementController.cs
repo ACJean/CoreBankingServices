@@ -23,29 +23,15 @@ namespace AccountTransactionService.Controllers
         {
             _movementsService.Add(movement);
 
-            return Ok();
+            var resourceUrl = $"/movimientos/{movement.Id}";
+
+            return Created(resourceUrl, null);
         }
 
         [HttpGet("{id}")]
         public IActionResult Get([FromRoute] int id)
         {
             return Ok(_movementsService.Get(id));
-        }
-
-        [HttpPut("{id}")]
-        public IActionResult Update([FromRoute] int id, [FromBody] Movements movement)
-        {
-            _movementsService.Update(movement);
-
-            return Ok();
-        }
-
-        [HttpDelete("{id}")]
-        public IActionResult Delete([FromRoute] int id)
-        {
-            _movementsService.Delete(id);
-
-            return Ok();
         }
 
     }

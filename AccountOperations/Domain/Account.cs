@@ -10,7 +10,7 @@ namespace AccountOperations.Domain
     public class Account
     {
 
-        public string Number { get; set; }
+        public string? Number { get; set; }
         public string CustomerIdentity { get; set; }
         public AccountType Type { get; set; }
         public decimal Balance { get; set; }

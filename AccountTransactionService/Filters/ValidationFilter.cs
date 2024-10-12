@@ -16,7 +16,7 @@ namespace AccountTransactionService.Filters
                     .Select(error => error.ErrorMessage)
                     .ToList();
 
-                context.Result = new BadRequestObjectResult(messages);
+                context.Result = new BadRequestObjectResult(new { validations = messages });
             }
         }
     }

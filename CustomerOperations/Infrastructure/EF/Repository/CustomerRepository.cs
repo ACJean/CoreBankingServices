@@ -25,7 +25,7 @@ namespace CustomerOperations.Infrastructure.EF.Repository
             {
                 PersonId = entity.PersonId,
                 Password = entity.Password,
-                State = entity.State
+                State = 1
             };
             
             _context.Set<DbCustomer>().Add(customer);
@@ -36,7 +36,7 @@ namespace CustomerOperations.Infrastructure.EF.Repository
 
         public void Delete(Customer entity)
         {
-            _context.Set<DbCustomer>().Remove(new DbCustomer { Id = entity.CustomerId });
+            _context.Customers.Remove(new DbCustomer { Id = entity.CustomerId });
             _context.SaveChanges();
         }
 
@@ -50,14 +50,15 @@ namespace CustomerOperations.Infrastructure.EF.Repository
                 State = entity.State
             };
 
-            _context.Set<DbCustomer>().Update(customer);
+            _context.Customers.Update(customer);
             _context.SaveChanges();
         }
 
         public IEnumerable<Customer> GetAll()
         {
             return _context
-                .Set<DbCustomer>()
+                .Customers
+                .AsNoTracking()
                 .ToList()
                 .Select(dbCustomer =>
                 {
@@ -81,6 +82,7 @@ namespace CustomerOperations.Infrastructure.EF.Repository
         {
             DbCustomer? customer = _context.Customers
                 .Include(c => c.Person)
+                .AsNoTracking()
                 .FirstOrDefault(c => c.Id == id);
             
             Customer? entity = customer != null ? new()
@@ -104,6 +106,7 @@ namespace CustomerOperations.Infrastructure.EF.Repository
         {
             DbCustomer? customer = _context.Customers
                 .Include(c => c.Person)
+                .AsNoTracking()
                 .FirstOrDefault(c => c.Person.IdentityNumber == identityNumber);
 
             Customer? entity = customer != null ? new()

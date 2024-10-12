@@ -52,8 +52,7 @@ namespace SharedOperations.Infrastructure
         public async Task<bool> IsExist(string customerIdentity)
         {
             var response = await _client.GetAsync($"/clientes/{customerIdentity}");
-            return !response.IsSuccessStatusCode || 
-                (response.IsSuccessStatusCode && response.StatusCode == HttpStatusCode.NoContent);
+            return response.IsSuccessStatusCode && response.StatusCode == HttpStatusCode.OK;
         }
     }
 }

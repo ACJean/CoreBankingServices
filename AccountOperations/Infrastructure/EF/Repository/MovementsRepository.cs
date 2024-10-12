@@ -84,6 +84,7 @@ namespace AccountOperations.Infrastructure.EF.Repository
                 Account = dbMovement.Account != null ? new Account
                 {
                     Number = dbMovement.Account.Number,
+                    CustomerIdentity = dbMovement.Account.CustomerIdentity,
                     Type = dbMovement.Account.Type,
                     Balance = dbMovement.Account.Balance,
                     State = dbMovement.Account.State

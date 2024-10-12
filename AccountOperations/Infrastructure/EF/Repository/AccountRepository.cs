@@ -26,7 +26,8 @@ namespace AccountOperations.Infrastructure.EF.Repository
             {
                 Number = entity.Number,
                 CustomerIdentity = entity.CustomerIdentity,
-                Type = entity.Type
+                Type = entity.Type,
+                State = 1
             };
 
             _context.Accounts.Add(account);
@@ -37,7 +38,7 @@ namespace AccountOperations.Infrastructure.EF.Repository
 
         public void Delete(Account entity)
         {
-            _context.Accounts.Remove(new DbAccount { Number = entity.Number });
+            _context.Accounts.Update(new DbAccount { Number = entity.Number, State = 0 });
             _context.SaveChanges();
         }
 
@@ -99,11 +100,10 @@ namespace AccountOperations.Infrastructure.EF.Repository
                 Number = entity.Number,
                 CustomerIdentity = entity.CustomerIdentity,
                 Type = entity.Type,
-                Balance = entity.Balance,
-                State = entity.State
+                Balance = entity.Balance
             };
 
-            _context.Set<DbAccount>().Update(account);
+            _context.Accounts.Update(account);
             _context.SaveChanges();
         }
     }
