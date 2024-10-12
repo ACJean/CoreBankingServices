@@ -1,0 +1,35 @@
+version: '3.8'
+services:
+  customer-profile-service:
+    container_name: customer-profile-service
+    hostname: customer-profile-service
+    image: ${DOCKER_REGISTRY-}customer-profile-service
+    build:
+      context: .
+      dockerfile: CustomerProfileService.Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: http://+:80
+    ports:
+      - "5001:80"
+    networks:
+      - apis-network
+
+  account-transaction-service:
+    container_name: account-transaction-service
+    hostname: account-transaction-service
+    image: ${DOCKER_REGISTRY-}account-transaction-service
+    build:
+      context: .
+      dockerfile: AccountTransactionService.Dockerfile
+    environment:
+        ASPNETCORE_ENVIRONMENT: Development
+        ASPNETCORE_URLS: http://+:80
+    ports:
+      - "5002:80"
+    networks:
+      - apis-network
+
+networks:
+  apis-network:
+    driver: bridge
