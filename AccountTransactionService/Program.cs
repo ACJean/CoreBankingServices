@@ -4,7 +4,7 @@ using AccountOperations.Infrastructure.EF;
 using AccountTransactionService.Filters;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using SharedOperations.Domain;
+using SharedOperations.Domain.Services;
 using SharedOperations.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);

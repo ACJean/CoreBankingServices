@@ -1,5 +1,4 @@
 using CustomerOperations.Domain;
-using Moq;
 using SharedOperations.Domain;
 using SharedOperations.Infrastructure;
 

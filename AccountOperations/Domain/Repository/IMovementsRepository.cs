@@ -1,11 +1,7 @@
-﻿using SharedOperations.Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AccountOperations.Domain.Entity;
+using SharedOperations.Domain.Repository;
 
-namespace AccountOperations.Domain
+namespace AccountOperations.Domain.Repository
 {
     public interface IMovementsRepository : IRepository<Movements, int>
     {

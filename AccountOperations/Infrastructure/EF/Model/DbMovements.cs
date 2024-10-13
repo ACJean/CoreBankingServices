@@ -1,4 +1,4 @@
-﻿using AccountOperations.Domain;
+﻿using AccountOperations.Domain.Entity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

@@ -1,4 +1,5 @@
 ﻿using AccountOperations.Domain;
+using AccountOperations.Domain.Entity;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;

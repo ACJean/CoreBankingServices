@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SharedOperations.Domain
+namespace SharedOperations.Domain.Repository
 {
     public interface IRepository<T, TKey> where T : class
     {

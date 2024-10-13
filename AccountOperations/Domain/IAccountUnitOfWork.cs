@@ -1,9 +1,5 @@
-﻿using SharedOperations.Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AccountOperations.Domain.Repository;
+using SharedOperations.Domain;
 
 namespace AccountOperations.Domain
 {

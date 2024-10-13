@@ -1,12 +1,7 @@
 ﻿using CustomerOperations.Domain;
-using CustomerOperations.Infrastructure.EF.Model;
+using CustomerOperations.Domain.Repository;
 using CustomerOperations.Infrastructure.EF.Repository;
 using Microsoft.EntityFrameworkCore.Storage;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CustomerOperations.Infrastructure.EF
 {

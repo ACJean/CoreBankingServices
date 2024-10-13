@@ -1,4 +1,5 @@
-﻿using AccountOperations.Domain;
+﻿using AccountOperations.Domain.Entity;
+using AccountOperations.Domain.Repository;
 using AccountOperations.Infrastructure.EF.Model;
 using Microsoft.EntityFrameworkCore;
 using System;

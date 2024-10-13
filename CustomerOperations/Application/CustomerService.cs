@@ -1,11 +1,6 @@
 ﻿using CustomerOperations.Domain;
-using CustomerOperations.Infrastructure.EF.Model;
+using CustomerOperations.Domain.Entity;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CustomerOperations.Application
 {

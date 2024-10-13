@@ -1,8 +1,6 @@
 using CustomerOperations.Application;
-using CustomerOperations.Domain;
-using CustomerProfileService.Filters;
+using CustomerOperations.Domain.Entity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace CustomerProfileService.Controllers
 {

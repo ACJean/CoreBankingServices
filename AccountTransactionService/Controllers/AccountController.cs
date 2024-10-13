@@ -1,5 +1,5 @@
 using AccountOperations.Application;
-using AccountOperations.Domain;
+using AccountOperations.Domain.Entity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AccountTransactionService.Controllers
