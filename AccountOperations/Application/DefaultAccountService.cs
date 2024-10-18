@@ -1,6 +1,8 @@
 ﻿using AccountOperations.Domain;
 using AccountOperations.Domain.Entity;
+using AccountOperations.Domain.Exceptions;
 using Microsoft.Extensions.Logging;
+using SharedOperations.Domain.Exceptions;
 using SharedOperations.Domain.Services;
 using System;
 using System.Collections.Generic;
@@ -11,14 +13,14 @@ using System.Threading.Tasks;
 
 namespace AccountOperations.Application
 {
-    public class AccountService
+    public class DefaultAccountService : IAccountService
     {
 
-        private readonly ILogger<AccountService> _logger;
+        private readonly ILogger<DefaultAccountService> _logger;
         private readonly IAccountUnitOfWork _unitOfWork;
         private readonly ICustomerResources _customerResources;
 
-        public AccountService(ILogger<AccountService> logger, IAccountUnitOfWork unitOfWork, ICustomerResources customerResources)
+        public DefaultAccountService(ILogger<DefaultAccountService> logger, IAccountUnitOfWork unitOfWork, ICustomerResources customerResources)
         {
             _logger = logger;
             _unitOfWork = unitOfWork;
@@ -33,7 +35,7 @@ namespace AccountOperations.Application
                 bool customerExist = await _customerResources.IsExist(account.CustomerIdentity);
                 if (!customerExist)
                 {
-                    throw new InvalidOperationException("Customer not found.");
+                    throw new CustomerNotFoundException("Customer not found.");
                 }
 
                 account.Number = Guid.NewGuid()

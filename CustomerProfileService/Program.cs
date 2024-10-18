@@ -27,7 +27,7 @@ builder.Services.AddDbContext<CustomerDbContext>(options =>
 
 builder.Services.AddScoped<ICustomerUnitOfWork, CustomerUnitOfWork>();
 
-builder.Services.AddScoped<CustomerService>();
+builder.Services.AddScoped<ICustomerService, DefaultCustomerService>();
 
 var app = builder.Build();
 

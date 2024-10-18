@@ -5,14 +5,14 @@ using Microsoft.AspNetCore.Mvc;
 namespace CustomerProfileService.Controllers
 {
     [ApiController]
-    [Route("/clientes")]
+    [Route("/customers")]
     public class CustomerController : ControllerBase
     {
 
         private readonly ILogger<CustomerController> _logger;
-        private readonly CustomerService _customerService;
+        private readonly ICustomerService _customerService;
 
-        public CustomerController(ILogger<CustomerController> logger, CustomerService customerService)
+        public CustomerController(ILogger<CustomerController> logger, ICustomerService customerService)
         {
             _logger = logger;
             _customerService = customerService;
@@ -23,7 +23,7 @@ namespace CustomerProfileService.Controllers
         {
             _customerService.Add(customer);
 
-            var resourceUrl = $"/clientes/{customer.IdentityNumber}";
+            var resourceUrl = $"/customers/{customer.IdentityNumber}";
 
             return Created(resourceUrl, null);
         }

@@ -24,13 +24,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{BASE_URL}}:{{ACCOUNT_SERVICE_PORT}}/cuentas",
+							"raw": "{{BASE_URL}}:{{ACCOUNT_SERVICE_PORT}}/accounts",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"port": "{{ACCOUNT_SERVICE_PORT}}",
 							"path": [
-								"cuentas"
+								"accounts"
 							]
 						}
 					},
@@ -42,13 +42,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BASE_URL}}:{{ACCOUNT_SERVICE_PORT}}/cuentas/41c9c60385",
+							"raw": "{{BASE_URL}}:{{ACCOUNT_SERVICE_PORT}}/accounts/41c9c60385",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"port": "{{ACCOUNT_SERVICE_PORT}}",
 							"path": [
-								"cuentas",
+								"accounts",
 								"41c9c60385"
 							]
 						}
@@ -70,13 +70,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{BASE_URL}}:{{ACCOUNT_SERVICE_PORT}}/cuentas/41c9c60385",
+							"raw": "{{BASE_URL}}:{{ACCOUNT_SERVICE_PORT}}/accounts/41c9c60385",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"port": "{{ACCOUNT_SERVICE_PORT}}",
 							"path": [
-								"cuentas",
+								"accounts",
 								"41c9c60385"
 							]
 						}
@@ -89,13 +89,13 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{BASE_URL}}:{{ACCOUNT_SERVICE_PORT}}/cuentas/41c9c60385",
+							"raw": "{{BASE_URL}}:{{ACCOUNT_SERVICE_PORT}}/accounts/41c9c60385",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"port": "{{ACCOUNT_SERVICE_PORT}}",
 							"path": [
-								"cuentas",
+								"accounts",
 								"41c9c60385"
 							]
 						}
@@ -114,7 +114,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"amount\": 20,\r\n  \"accountNumber\": \"41c9c60385\"\r\n}",
+							"raw": "{\r\n  \"amount\": -500,\r\n  \"accountNumber\": \"41c9c60385\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -122,13 +122,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{BASE_URL}}:{{ACCOUNT_SERVICE_PORT}}/movimientos",
+							"raw": "{{BASE_URL}}:{{ACCOUNT_SERVICE_PORT}}/movements",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"port": "{{ACCOUNT_SERVICE_PORT}}",
 							"path": [
-								"movimientos"
+								"movements"
 							]
 						}
 					},
@@ -140,13 +140,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BASE_URL}}:{{ACCOUNT_SERVICE_PORT}}/movimientos/3",
+							"raw": "{{BASE_URL}}:{{ACCOUNT_SERVICE_PORT}}/movements/3",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"port": "{{ACCOUNT_SERVICE_PORT}}",
 							"path": [
-								"movimientos",
+								"movements",
 								"3"
 							]
 						}
@@ -173,13 +173,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{BASE_URL}}:{{CUSTOMER_SERVICE_PORT}}/clientes",
+							"raw": "{{BASE_URL}}:{{CUSTOMER_SERVICE_PORT}}/customers",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"port": "{{CUSTOMER_SERVICE_PORT}}",
 							"path": [
-								"clientes"
+								"customers"
 							]
 						}
 					},
@@ -191,13 +191,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BASE_URL}}:{{CUSTOMER_SERVICE_PORT}}/clientes/1726410530",
+							"raw": "{{BASE_URL}}:{{CUSTOMER_SERVICE_PORT}}/customers/1726410530",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"port": "{{CUSTOMER_SERVICE_PORT}}",
 							"path": [
-								"clientes",
+								"customers",
 								"1726410530"
 							]
 						}
@@ -219,13 +219,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{BASE_URL}}:{{CUSTOMER_SERVICE_PORT}}/clientes/1726410530",
+							"raw": "{{BASE_URL}}:{{CUSTOMER_SERVICE_PORT}}/customers/1726410530",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"port": "{{CUSTOMER_SERVICE_PORT}}",
 							"path": [
-								"clientes",
+								"customers",
 								"1726410530"
 							]
 						}
@@ -238,13 +238,13 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{BASE_URL}}:{{CUSTOMER_SERVICE_PORT}}/clientes/1726410530",
+							"raw": "{{BASE_URL}}:{{CUSTOMER_SERVICE_PORT}}/customers/1726410530",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"port": "{{CUSTOMER_SERVICE_PORT}}",
 							"path": [
-								"clientes",
+								"customers",
 								"1726410530"
 							]
 						}
@@ -262,13 +262,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{BASE_URL}}:{{ACCOUNT_SERVICE_PORT}}/reportes?startDate=10-10-2024&endDate=12-10-2024",
+							"raw": "{{BASE_URL}}:{{ACCOUNT_SERVICE_PORT}}/reports?startDate=10-10-2024&endDate=15-10-2024",
 							"host": [
 								"{{BASE_URL}}"
 							],
 							"port": "{{ACCOUNT_SERVICE_PORT}}",
 							"path": [
-								"reportes"
+								"reports"
 							],
 							"query": [
 								{
@@ -277,7 +277,7 @@
 								},
 								{
 									"key": "endDate",
-									"value": "12-10-2024"
+									"value": "15-10-2024"
 								}
 							]
 						}

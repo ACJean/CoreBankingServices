@@ -30,9 +30,9 @@ builder.Services.AddDbContext<AccountDbContext>(options =>
 builder.Services.AddScoped<IAccountUnitOfWork, AccountUnitOfWork>();
 builder.Services.AddTransient<ICustomerResources, HttpCustomerResources>();
 
-builder.Services.AddScoped<AccountService>();
-builder.Services.AddScoped<MovementsService>();
-builder.Services.AddScoped<ReportService>();
+builder.Services.AddScoped<IAccountService, DefaultAccountService>();
+builder.Services.AddScoped<IMovementsService, DefaultMovementsService>();
+builder.Services.AddScoped<IReportService, DefaultReportService>();
 
 // Configuración de clientes http a Microservicios
 builder.Services.AddHttpClient("CustomerService", client =>

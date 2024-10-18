@@ -5,14 +5,14 @@ using Microsoft.AspNetCore.Mvc;
 namespace AccountTransactionService.Controllers
 {
     [ApiController]
-    [Route("/movimientos")]
+    [Route("/movements")]
     public class MovementController : ControllerBase
     {
 
         private readonly ILogger<AccountController> _logger;
-        private readonly MovementsService _movementsService;
+        private readonly IMovementsService _movementsService;
 
-        public MovementController(ILogger<AccountController> logger, MovementsService movementsService)
+        public MovementController(ILogger<AccountController> logger, IMovementsService movementsService)
         {
             _logger = logger;
             _movementsService = movementsService;
@@ -23,7 +23,7 @@ namespace AccountTransactionService.Controllers
         {
             _movementsService.Add(movement);
 
-            var resourceUrl = $"/movimientos/{movement.Id}";
+            var resourceUrl = $"/movements/{movement.Id}";
 
             return Created(resourceUrl, null);
         }

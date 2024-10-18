@@ -10,4 +10,8 @@
     <ProjectReference Include="..\SharedCore\SharedOperations.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Domain\Exceptions\" />
+  </ItemGroup>
+
 </Project>

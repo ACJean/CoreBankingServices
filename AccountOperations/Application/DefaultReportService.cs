@@ -3,6 +3,7 @@ using AccountOperations.Domain.Entity;
 using Microsoft.Extensions.Logging;
 using SharedOperations.Domain.Services;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -13,13 +14,13 @@ using System.Threading.Tasks;
 
 namespace AccountOperations.Application
 {
-    public class ReportService
+    public class DefaultReportService : IReportService
     {
-        private readonly ILogger<ReportService> _logger;
+        private readonly ILogger<DefaultReportService> _logger;
         private readonly IAccountUnitOfWork _unitOfWork;
         private readonly ICustomerResources _customerResources;
 
-        public ReportService(ILogger<ReportService> logger, IAccountUnitOfWork unitOfWork, ICustomerResources customerResources)
+        public DefaultReportService(ILogger<DefaultReportService> logger, IAccountUnitOfWork unitOfWork, ICustomerResources customerResources)
         {
             _logger = logger;
             _unitOfWork = unitOfWork;
@@ -40,10 +41,11 @@ namespace AccountOperations.Application
 
                 if (accountMovements.Any())
                 {
-                    Dictionary<string, string> customersAccount = accountMovements
-                    .Select(movement => movement.CustomerIdentity)
-                    .Distinct()
-                    .ToDictionary(identity => identity, identity => "");
+                    ConcurrentDictionary<string, string> customersAccount = new(
+                        accountMovements
+                        .Select(movement => movement.CustomerIdentity)
+                        .Distinct()
+                        .ToDictionary(identity => identity, identity => ""));
 
                     var tasks = customersAccount.Select(async customerAccount =>
                     {
@@ -51,10 +53,7 @@ namespace AccountOperations.Application
 
                         if (string.IsNullOrEmpty(customerName)) return;
 
-                        lock (customersAccount)
-                        {
-                            customersAccount[customerAccount.Key] = customerName;
-                        }
+                        customersAccount.TryAdd(customerAccount.Key, customerName);
                     });
 
                     await Task.WhenAll(tasks);

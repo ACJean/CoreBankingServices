@@ -1,5 +1,6 @@
 ﻿using AccountOperations.Domain;
 using AccountOperations.Domain.Entity;
+using AccountOperations.Domain.Exceptions;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -9,14 +10,14 @@ using System.Threading.Tasks;
 
 namespace AccountOperations.Application
 {
-    public class MovementsService
+    public class DefaultMovementsService : IMovementsService
     {
 
-        private readonly ILogger<MovementsService> _logger;
+        private readonly ILogger<DefaultMovementsService> _logger;
         private readonly IAccountUnitOfWork _unitOfWork;
-        private readonly AccountService _accountService;
+        private readonly DefaultAccountService _accountService;
 
-        public MovementsService(ILogger<MovementsService> logger, IAccountUnitOfWork unitOfWork, AccountService accountService)
+        public DefaultMovementsService(ILogger<DefaultMovementsService> logger, IAccountUnitOfWork unitOfWork, DefaultAccountService accountService)
         {
             _logger = logger;
             _unitOfWork = unitOfWork;
@@ -31,7 +32,7 @@ namespace AccountOperations.Application
 
                 if ((account.Balance + movement.Amount) < 0)
                 {
-                    throw new InvalidOperationException("Saldo no disponible");
+                    throw new InvalidAccountMovementException("Saldo no disponible");
                 }
 
                 _unitOfWork.BeginTransaction();

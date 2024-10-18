@@ -1,16 +1,17 @@
 ﻿using CustomerOperations.Domain;
 using CustomerOperations.Domain.Entity;
 using Microsoft.Extensions.Logging;
+using SharedOperations.Domain.Exceptions;
 
 namespace CustomerOperations.Application
 {
-    public class CustomerService
+    public class DefaultCustomerService : ICustomerService
     {
 
-        private readonly ILogger<CustomerService> _logger;
+        private readonly ILogger<DefaultCustomerService> _logger;
         private readonly ICustomerUnitOfWork _unitOfWork;
 
-        public CustomerService(ILogger<CustomerService> logger, ICustomerUnitOfWork unitOfWork)
+        public DefaultCustomerService(ILogger<DefaultCustomerService> logger, ICustomerUnitOfWork unitOfWork)
         {
             _logger = logger;
             _unitOfWork = unitOfWork;
@@ -22,7 +23,7 @@ namespace CustomerOperations.Application
             {
                 if (Get(customer.IdentityNumber) != null)
                 {
-                    throw new InvalidOperationException($"A customer with IdentityNumber {customer.IdentityNumber} already exists.");
+                    throw new CustomerAlreadyExistException($"A customer with IdentityNumber {customer.IdentityNumber} already exists.");
                 }
 
                 _unitOfWork.BeginTransaction();

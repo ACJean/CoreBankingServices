@@ -5,14 +5,14 @@ using Microsoft.AspNetCore.Mvc;
 namespace AccountTransactionService.Controllers
 {
     [ApiController]
-    [Route("/cuentas")]
+    [Route("/accounts")]
     public class AccountController : ControllerBase
     {
 
         private readonly ILogger<AccountController> _logger;
-        private readonly AccountService _accountService;
+        private readonly IAccountService _accountService;
 
-        public AccountController(ILogger<AccountController> logger, AccountService accountService)
+        public AccountController(ILogger<AccountController> logger, IAccountService accountService)
         {
             _logger = logger;
             _accountService = accountService;
@@ -23,7 +23,7 @@ namespace AccountTransactionService.Controllers
         {
             await _accountService.Add(account);
 
-            var resourceUrl = $"/cuentas/{account.Number}";
+            var resourceUrl = $"/accounts/{account.Number}";
 
             return Created(resourceUrl, null);
         }
