@@ -1,6 +1,8 @@
 ﻿using CustomerOperations.Domain;
 using CustomerOperations.Domain.Entity;
+using CustomerOperations.Domain.Errors;
 using Microsoft.Extensions.Logging;
+using SharedOperations.Domain;
 using SharedOperations.Domain.Exceptions;
 
 namespace CustomerOperations.Application
@@ -17,13 +19,13 @@ namespace CustomerOperations.Application
             _unitOfWork = unitOfWork;
         }
 
-        public void Add(Customer customer)
+        public Result<Unit, Error> Add(Customer customer)
         {
             try
             {
-                if (Get(customer.IdentityNumber) != null)
+                if (Get(customer.IdentityNumber).Value != null)
                 {
-                    throw new CustomerAlreadyExistException($"A customer with IdentityNumber {customer.IdentityNumber} already exists.");
+                    return CustomerErrors.AlreadyExist;
                 }
 
                 _unitOfWork.BeginTransaction();
@@ -33,6 +35,8 @@ namespace CustomerOperations.Application
                 _unitOfWork.Customers.Add(customer);
 
                 _unitOfWork.Commit();
+
+                return Unit.Value;
             }
             catch (Exception ex)
             {
@@ -44,7 +48,7 @@ namespace CustomerOperations.Application
             }
         }
 
-        public Customer? Get(string identityNumber)
+        public Result<Customer?, Error> Get(string identityNumber)
         {
             try
             {
@@ -57,7 +61,7 @@ namespace CustomerOperations.Application
             }
         }
 
-        public void Update(Customer customer)
+        public Result<Unit, Error> Update(Customer customer)
         {
             try
             {
@@ -67,6 +71,8 @@ namespace CustomerOperations.Application
                 _unitOfWork.Persons.Update(customer);
 
                 _unitOfWork.Commit();
+
+                return Unit.Value;
             }
             catch (Exception ex)
             {
@@ -75,13 +81,16 @@ namespace CustomerOperations.Application
             }
         }
 
-        public void Delete(string identityNumber)
+        public Result<Unit, Error> Delete(string identityNumber)
         {
             try
             {
-                Customer? customer = Get(identityNumber) ?? throw new InvalidOperationException($"Customer not found.");
+                Customer? customer = Get(identityNumber).Value;
+                if (customer == null) return CustomerErrors.NotFound;
                 customer.State = 0;
                 _unitOfWork.Customers.Update(customer);
+
+                return Unit.Value;
             }
             catch (Exception ex)
             {

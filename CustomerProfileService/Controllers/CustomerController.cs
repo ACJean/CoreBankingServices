@@ -1,6 +1,8 @@
 using CustomerOperations.Application;
 using CustomerOperations.Domain.Entity;
+using CustomerProfileService.Handler;
 using Microsoft.AspNetCore.Mvc;
+using SharedOperations.Domain;
 
 namespace CustomerProfileService.Controllers
 {
@@ -21,33 +23,36 @@ namespace CustomerProfileService.Controllers
         [HttpPost]
         public IActionResult Create([FromBody] Customer customer)
         {
-            _customerService.Add(customer);
+            Result<Unit, Error> result = _customerService.Add(customer);
 
             var resourceUrl = $"/customers/{customer.IdentityNumber}";
 
-            return Created(resourceUrl, null);
+            return ResultHandler.HandleResultCreated(result, resourceUrl);
         }
 
         [HttpGet("{identityNumber}")]
         public IActionResult Get([FromRoute] string identityNumber)
-        {
-            return Ok(_customerService.Get(identityNumber));
+        {   
+            Result<Customer?, Error> result = _customerService.Get(identityNumber);
+
+            return ResultHandler.HandleResult(result);
         }
 
         [HttpPut("{identityNumber}")]
         public IActionResult Update([FromRoute] string identityNumber, [FromBody] Customer customer)
         {
-            _customerService.Update(customer);
 
-            return Ok();
+            Result<Unit, Error> result = _customerService.Update(customer);
+
+            return ResultHandler.HandleResult(result);
         }
 
         [HttpDelete("{identityNumber}")]
         public IActionResult Delete([FromRoute] string identityNumber)
         {
-            _customerService.Delete(identityNumber);
+            Result<Unit, Error> result = _customerService.Delete(identityNumber);
 
-            return Ok();
+            return ResultHandler.HandleResult(result);
         }
     }
 }

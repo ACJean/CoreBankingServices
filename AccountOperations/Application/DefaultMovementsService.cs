@@ -15,9 +15,9 @@ namespace AccountOperations.Application
 
         private readonly ILogger<DefaultMovementsService> _logger;
         private readonly IAccountUnitOfWork _unitOfWork;
-        private readonly DefaultAccountService _accountService;
+        private readonly IAccountService _accountService;
 
-        public DefaultMovementsService(ILogger<DefaultMovementsService> logger, IAccountUnitOfWork unitOfWork, DefaultAccountService accountService)
+        public DefaultMovementsService(ILogger<DefaultMovementsService> logger, IAccountUnitOfWork unitOfWork, IAccountService accountService)
         {
             _logger = logger;
             _unitOfWork = unitOfWork;

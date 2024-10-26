@@ -7,11 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SharedCore\SharedOperations.csproj" />
+    <None Remove="Application\DefaultCustomerService.cs~RF29f3d4d9.TMP" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Domain\Exceptions\" />
+    <ProjectReference Include="..\SharedCore\SharedOperations.csproj" />
   </ItemGroup>
 
 </Project>
