@@ -1,6 +1,7 @@
 ﻿using AccountOperations.Domain;
 using AccountOperations.Domain.Entity;
 using AccountOperations.Domain.Errors;
+using AccountOperations.Domain.Generator;
 using Microsoft.Extensions.Logging;
 using SharedOperations.Domain;
 using SharedOperations.Domain.Services;
@@ -14,12 +15,17 @@ namespace AccountOperations.Application
         private readonly ILogger<DefaultAccountService> _logger;
         private readonly IAccountUnitOfWork _unitOfWork;
         private readonly ICustomerResources _customerResources;
+        private readonly IAccountNumberGenerator _accountNumberGenerator;
 
-        public DefaultAccountService(ILogger<DefaultAccountService> logger, IAccountUnitOfWork unitOfWork, ICustomerResources customerResources)
+        public DefaultAccountService(ILogger<DefaultAccountService> logger, 
+            IAccountUnitOfWork unitOfWork, 
+            ICustomerResources customerResources,
+            IAccountNumberGenerator accountNumberGenerator)
         {
             _logger = logger;
             _unitOfWork = unitOfWork;
             _customerResources = customerResources;
+            _accountNumberGenerator = accountNumberGenerator;
         }
 
 
@@ -33,10 +39,7 @@ namespace AccountOperations.Application
                     return CustomerErrors.NotFound;
                 }
 
-                account.Number = Guid.NewGuid()
-                    .ToString()
-                    .Replace("-", "")
-                    .Substring(0, 10);
+                account.Number = _accountNumberGenerator.GenerateAccountNumber();
 
                 _unitOfWork.Account.Add(account);
 
@@ -49,7 +52,7 @@ namespace AccountOperations.Application
             }
         }
 
-        public Result<Account, Error> Get(string accountNumber)
+        public Result<Account, Error> Get(long accountNumber)
         {
             try
             {
@@ -62,7 +65,7 @@ namespace AccountOperations.Application
             }
         }
 
-        public async Task<Result<Unit, Error>> Update(string accountNumber, Account account)
+        public async Task<Result<Unit, Error>> Update(long accountNumber, Account account)
         {
             try
             {
@@ -85,7 +88,7 @@ namespace AccountOperations.Application
             }
         }
 
-        public Result<Unit, Error> Delete(string accountNumber)
+        public Result<Unit, Error> Delete(long accountNumber)
         {
             try
             {

@@ -2,12 +2,6 @@
 using AccountOperations.Domain.Repository;
 using AccountOperations.Infrastructure.EF.Model;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Principal;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AccountOperations.Infrastructure.EF.Repository
 {
@@ -21,7 +15,7 @@ namespace AccountOperations.Infrastructure.EF.Repository
             _context = context;
         }
 
-        public string Add(Account entity)
+        public long Add(Account entity)
         {
             DbAccount account = new()
             {
@@ -67,7 +61,7 @@ namespace AccountOperations.Infrastructure.EF.Repository
                 });
         }
 
-        public Account GetById(string id)
+        public Account GetById(long id)
         {
             DbAccount dbAccount = _context.Accounts
                 .Include(c => c.Movements)

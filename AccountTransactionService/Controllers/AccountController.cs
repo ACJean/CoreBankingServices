@@ -31,7 +31,7 @@ namespace AccountTransactionService.Controllers
         }
 
         [HttpGet("{accountNumber}")]
-        public IActionResult Get([FromRoute] string accountNumber)
+        public IActionResult Get([FromRoute] long accountNumber)
         {
             Result<Account?, Error> result = _accountService.Get(accountNumber);
 
@@ -39,7 +39,7 @@ namespace AccountTransactionService.Controllers
         }
 
         [HttpPut("{accountNumber}")]
-        public async Task<IActionResult> Update([FromRoute] string accountNumber, [FromBody] Account account)
+        public async Task<IActionResult> Update([FromRoute] long accountNumber, [FromBody] Account account)
         {
             Result<Unit, Error> result = await _accountService.Update(accountNumber, account);
 
@@ -47,7 +47,7 @@ namespace AccountTransactionService.Controllers
         }
 
         [HttpDelete("{accountNumber}")]
-        public IActionResult Delete([FromRoute] string accountNumber)
+        public IActionResult Delete([FromRoute] long accountNumber)
         {
             Result<Unit, Error> result = _accountService.Delete(accountNumber);
 

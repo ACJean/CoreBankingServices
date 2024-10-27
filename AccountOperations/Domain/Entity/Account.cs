@@ -7,7 +7,7 @@ namespace AccountOperations.Domain.Entity
 
         private decimal _balance;
 
-        public string Number { get; set; }
+        public long Number { get; set; }
         public string CustomerIdentity { get; set; }
         public AccountType Type { get; set; }
         public decimal Balance { 

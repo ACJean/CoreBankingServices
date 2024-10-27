@@ -6,7 +6,7 @@
         public DateTime Date { get; set; }
         public string CustomerIdentity { get; set; }
         public string CustomerName { get; set; }
-        public string AccountNumber { get; set; }
+        public long AccountNumber { get; set; }
         public AccountType Type { get; set; }
         public decimal InitialBalance { get; set; }
         public short State { get; set; }

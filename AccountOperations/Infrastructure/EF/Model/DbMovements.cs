@@ -19,7 +19,7 @@ namespace AccountOperations.Infrastructure.EF.Model
 
         [ForeignKey("Account")]
         [Column("Mov_AccountNumber")]
-        public string AccountNumber { get; set; }
+        public long AccountNumber { get; set; }
         public DbAccount Account { get; set; }
 
         [Column("Mov_Date")]

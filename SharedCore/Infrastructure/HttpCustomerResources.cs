@@ -18,7 +18,7 @@ namespace SharedOperations.Infrastructure
 
         public async Task<string> GetName(string customerIdentity)
         {
-            var response = await _client.GetAsync($"/clientes/{customerIdentity}");
+            var response = await _client.GetAsync($"/customers/{customerIdentity}");
 
             string responseData = await response.Content.ReadAsStringAsync();
 
@@ -44,7 +44,7 @@ namespace SharedOperations.Infrastructure
 
         public async Task<bool> IsExist(string customerIdentity)
         {
-            var response = await _client.GetAsync($"/clientes/{customerIdentity}");
+            var response = await _client.GetAsync($"/customers/{customerIdentity}");
             return response.IsSuccessStatusCode && response.StatusCode == HttpStatusCode.OK;
         }
     }

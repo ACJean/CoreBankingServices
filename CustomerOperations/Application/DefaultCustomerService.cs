@@ -40,9 +40,7 @@ namespace CustomerOperations.Application
             catch (Exception ex)
             {
                 _unitOfWork.Rollback();
-
                 _logger.LogError(ex, "Error on create customer.");
-
                 throw;
             }
         }
@@ -75,6 +73,7 @@ namespace CustomerOperations.Application
             }
             catch (Exception ex)
             {
+                _unitOfWork.Rollback();
                 _logger.LogError(ex, "Error on update customer.");
                 throw;
             }

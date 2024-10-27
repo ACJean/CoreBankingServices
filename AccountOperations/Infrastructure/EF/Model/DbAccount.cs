@@ -17,7 +17,7 @@ namespace AccountOperations.Infrastructure.EF.Model
         [Key]
         [Column("Acc_Number")]
         [Required]
-        public string Number { get; set; }
+        public long Number { get; set; }
 
         [Column("Acc_CustomerIdentity")]
         [Required]

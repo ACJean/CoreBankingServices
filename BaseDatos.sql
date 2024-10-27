@@ -23,18 +23,18 @@ CREATE TABLE Customer (
 );
 
 CREATE TABLE Account (
-	Acc_Number VARCHAR(100) PRIMARY KEY,
+	Acc_Number BIGINT PRIMARY KEY,
 	Acc_CustomerIdentity VARCHAR(50) NOT NULL,
-	Acc_Type SMALLINT NOT NULL,
+	Acc_Type INT NOT NULL,
 	Acc_Balance MONEY NOT NULL DEFAULT 0,
 	Acc_State SMALLINT NOT NULL DEFAULT 1
 );
 
 CREATE TABLE Movements (
 	Mov_Id INT PRIMARY KEY IDENTITY(1,1),
-	Mov_AccountNumber VARCHAR(100) NOT NULL,
+	Mov_AccountNumber BIGINT NOT NULL,
 	Mov_Date DATETIME NOT NULL,
-	Mov_Type SMALLINT NOT NULL,
+	Mov_Type INT NOT NULL,
 	Mov_Amount MONEY NOT NULL,
 	Mov_Balance MONEY NOT NULL,
 	CONSTRAINT FK_Account_Movements FOREIGN KEY (Mov_AccountNumber) REFERENCES Account(Acc_Number)

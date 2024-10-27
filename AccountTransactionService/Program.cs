@@ -1,5 +1,6 @@
 using AccountOperations.Application;
 using AccountOperations.Domain;
+using AccountOperations.Domain.Generator;
 using AccountOperations.Infrastructure.EF;
 using AccountTransactionService.Filters;
 using Microsoft.AspNetCore.Mvc;
@@ -33,6 +34,8 @@ builder.Services.AddTransient<ICustomerResources, HttpCustomerResources>();
 builder.Services.AddScoped<IAccountService, DefaultAccountService>();
 builder.Services.AddScoped<IMovementsService, DefaultMovementsService>();
 builder.Services.AddScoped<IReportService, DefaultReportService>();
+
+builder.Services.AddScoped<IAccountNumberGenerator, DefaultAccountNumberGenerator>();
 
 // Configuración de clientes http a Microservicios
 builder.Services.AddHttpClient("CustomerService", client =>

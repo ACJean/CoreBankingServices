@@ -13,7 +13,7 @@ namespace AccountOperations.Domain.Entity
         public decimal Amount { get; set; }
         public decimal Balance { get; set; }
 
-        public string AccountNumber { get; set; }
+        public long AccountNumber { get; set; }
         public Account Account { get; set; }
 
         public static ValidationResult ValidateNotZero(int value, ValidationContext context)

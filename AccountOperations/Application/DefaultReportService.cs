@@ -47,7 +47,7 @@ namespace AccountOperations.Application
 
                         if (string.IsNullOrEmpty(customerName)) return;
 
-                        customersAccount.TryAdd(customerAccount.Key, customerName);
+                        customersAccount.AddOrUpdate(customerAccount.Key, "", (_, _) => customerName);
                     });
 
                     await Task.WhenAll(tasks);
