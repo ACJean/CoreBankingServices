@@ -57,7 +57,7 @@ namespace AccountOperations.Infrastructure.EF
 
         public void Rollback()
         {
-            if (_transaction != null)
+            if (_transaction is not null)
             {
                 _transaction.Rollback();
                 _transaction.Dispose();

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace AccountTransactionService.Filters
 {
@@ -12,7 +13,7 @@ namespace AccountTransactionService.Filters
             if (!context.ModelState.IsValid)
             {
                 var messages = context.ModelState
-                    .SelectMany(message => message.Value.Errors)
+                    .SelectMany(message => message.Value?.Errors ?? new ModelErrorCollection())
                     .Select(error => error.ErrorMessage)
                     .ToList();
 

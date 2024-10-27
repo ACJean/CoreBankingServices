@@ -1,15 +1,10 @@
 ﻿using AccountOperations.Domain;
 using AccountOperations.Domain.Entity;
-using AccountOperations.Domain.Exceptions;
+using AccountOperations.Domain.Errors;
 using Microsoft.Extensions.Logging;
-using SharedOperations.Domain.Exceptions;
+using SharedOperations.Domain;
 using SharedOperations.Domain.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
+using SharedOperations.Errors;
 
 namespace AccountOperations.Application
 {
@@ -28,14 +23,14 @@ namespace AccountOperations.Application
         }
 
 
-        public async Task Add(Account account)
+        public async Task<Result<Unit, Error>> Add(Account account)
         {
             try
             {
                 bool customerExist = await _customerResources.IsExist(account.CustomerIdentity);
                 if (!customerExist)
                 {
-                    throw new CustomerNotFoundException("Customer not found.");
+                    return CustomerErrors.NotFound;
                 }
 
                 account.Number = Guid.NewGuid()
@@ -44,6 +39,8 @@ namespace AccountOperations.Application
                     .Substring(0, 10);
 
                 _unitOfWork.Account.Add(account);
+
+                return Unit.Value;
             }
             catch (Exception ex)
             {
@@ -52,7 +49,7 @@ namespace AccountOperations.Application
             }
         }
 
-        public Account? Get(string accountNumber)
+        public Result<Account, Error> Get(string accountNumber)
         {
             try
             {
@@ -65,7 +62,7 @@ namespace AccountOperations.Application
             }
         }
 
-        public async Task Update(string accountNumber, Account account)
+        public async Task<Result<Unit, Error>> Update(string accountNumber, Account account)
         {
             try
             {
@@ -74,10 +71,12 @@ namespace AccountOperations.Application
                 bool customerExist = await _customerResources.IsExist(account.CustomerIdentity);
                 if (!customerExist)
                 {
-                    throw new InvalidOperationException("Customer not found.");
+                    return CustomerErrors.NotFound;
                 }
 
                 _unitOfWork.Account.Update(account);
+
+                return Unit.Value;
             }
             catch (Exception ex)
             {
@@ -86,13 +85,19 @@ namespace AccountOperations.Application
             }
         }
 
-        public void Delete(string accountNumber)
+        public Result<Unit, Error> Delete(string accountNumber)
         {
             try
             {
-                Account? account = Get(accountNumber) ?? throw new InvalidOperationException($"Account not found.");
+                Account account = Get(accountNumber).Value;
+                if (account is null)
+                {
+                    return AccountErrors.NotFound;
+                }
                 account.State = 0;
                 _unitOfWork.Account.Update(account);
+
+                return Unit.Value;
             }
             catch (Exception ex)
             {

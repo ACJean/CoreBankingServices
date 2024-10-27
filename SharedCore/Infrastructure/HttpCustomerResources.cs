@@ -1,14 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using SharedOperations.Domain.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Net.Http;
-using System.Security.Principal;
-using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace SharedOperations.Infrastructure
 {
@@ -23,7 +16,7 @@ namespace SharedOperations.Infrastructure
             _client = httpClientFactory.CreateClient("CustomerService");
         }
 
-        public async Task<string?> GetName(string customerIdentity)
+        public async Task<string> GetName(string customerIdentity)
         {
             var response = await _client.GetAsync($"/clientes/{customerIdentity}");
 
@@ -39,7 +32,7 @@ namespace SharedOperations.Infrastructure
 
             JsonElement root = doc.RootElement;
 
-            string? customerName = root.GetProperty("name").GetString();
+            string customerName = root.GetProperty("name").GetString();
 
             if (customerName is null)
             {

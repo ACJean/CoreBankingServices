@@ -1,6 +1,8 @@
 ﻿using AccountOperations.Application;
 using AccountOperations.Domain.Entity;
+using AccountTransactionService.Handler;
 using Microsoft.AspNetCore.Mvc;
+using SharedOperations.Domain;
 
 namespace AccountTransactionService.Controllers
 {
@@ -21,17 +23,19 @@ namespace AccountTransactionService.Controllers
         [HttpPost]
         public IActionResult Create([FromBody] Movements movement)
         {
-            _movementsService.Add(movement);
+            Result<Unit, Error> result = _movementsService.Add(movement);
 
             var resourceUrl = $"/movements/{movement.Id}";
 
-            return Created(resourceUrl, null);
+            return ResultHandler.HandleResultCreated(result, resourceUrl) ;
         }
 
         [HttpGet("{id}")]
         public IActionResult Get([FromRoute] int id)
         {
-            return Ok(_movementsService.Get(id));
+            Result<Movements?, Error> result = _movementsService.Get(id);
+
+            return ResultHandler.HandleResult(result);
         }
 
     }

@@ -74,14 +74,14 @@ namespace CustomerOperations.Infrastructure.EF.Repository
                 });
         }
 
-        public Customer? GetById(int id)
+        public Customer GetById(int id)
         {
-            DbCustomer? customer = _context.Customers
+            DbCustomer customer = _context.Customers
                 .Include(c => c.Person)
                 .AsNoTracking()
                 .FirstOrDefault(c => c.Id == id);
             
-            Customer? entity = customer != null ? new()
+            Customer entity = customer != null ? new()
             {
                 CustomerId = customer.Id,
                 PersonId = customer.PersonId,
@@ -98,14 +98,14 @@ namespace CustomerOperations.Infrastructure.EF.Repository
             return entity;
         }
 
-        public Customer? GetByIdentityNumber(string identityNumber)
+        public Customer GetByIdentityNumber(string identityNumber)
         {
-            DbCustomer? customer = _context.Customers
+            DbCustomer customer = _context.Customers
                 .Include(c => c.Person)
                 .AsNoTracking()
                 .FirstOrDefault(c => c.Person.IdentityNumber == identityNumber);
 
-            Customer? entity = customer != null ? new()
+            Customer entity = customer != null ? new()
             {
                 CustomerId = customer.Id,
                 PersonId = customer.PersonId,

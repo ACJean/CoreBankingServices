@@ -1,9 +1,8 @@
 ﻿using CustomerOperations.Domain;
 using CustomerOperations.Domain.Entity;
-using CustomerOperations.Domain.Errors;
 using Microsoft.Extensions.Logging;
 using SharedOperations.Domain;
-using SharedOperations.Domain.Exceptions;
+using SharedOperations.Errors;
 
 namespace CustomerOperations.Application
 {
@@ -23,7 +22,7 @@ namespace CustomerOperations.Application
         {
             try
             {
-                if (Get(customer.IdentityNumber).Value != null)
+                if (Get(customer.IdentityNumber).Value is not null)
                 {
                     return CustomerErrors.AlreadyExist;
                 }
@@ -48,7 +47,7 @@ namespace CustomerOperations.Application
             }
         }
 
-        public Result<Customer?, Error> Get(string identityNumber)
+        public Result<Customer, Error> Get(string identityNumber)
         {
             try
             {
@@ -85,8 +84,8 @@ namespace CustomerOperations.Application
         {
             try
             {
-                Customer? customer = Get(identityNumber).Value;
-                if (customer == null) return CustomerErrors.NotFound;
+                Customer customer = Get(identityNumber).Value;
+                if (customer is null) return CustomerErrors.NotFound;
                 customer.State = 0;
                 _unitOfWork.Customers.Update(customer);
 

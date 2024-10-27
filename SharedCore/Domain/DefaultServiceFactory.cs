@@ -60,7 +60,7 @@ namespace SharedOperations.Domain
 
             if (!typeof(TService).IsAssignableFrom(implementationType)) throw new ApplicationException("Invalid service type.");
 
-            object? service;
+            object service;
             if (lifeTime == Lifetime.Scoped || lifeTime == Lifetime.Transient)
             {
                 var scope = _serviceProvider.CreateScope();

@@ -58,11 +58,11 @@ namespace CustomerOperations.Infrastructure.EF.Repository
                 });
         }
 
-        public Person? GetById(int id)
+        public Person GetById(int id)
         {
-            DbPerson? dbPerson = _context.Set<DbPerson>().Find(id);
+            DbPerson dbPerson = _context.Set<DbPerson>().Find(id);
 
-            Person? person = dbPerson != null ? new()
+            Person person = dbPerson != null ? new()
             {
                 PersonId = dbPerson.Id,
                 Name = dbPerson.Name,

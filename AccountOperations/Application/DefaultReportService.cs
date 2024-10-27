@@ -1,16 +1,10 @@
 ﻿using AccountOperations.Domain;
 using AccountOperations.Domain.Entity;
 using Microsoft.Extensions.Logging;
+using SharedOperations.Domain;
 using SharedOperations.Domain.Services;
-using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace AccountOperations.Application
 {
@@ -27,7 +21,7 @@ namespace AccountOperations.Application
             _customerResources = customerResources;
         }
 
-        public async Task<IEnumerable<AccountMovement>> GetAccountMovements(string startDate, string endDate)
+        public async Task<Result<IEnumerable<AccountMovement>, Error>> GetAccountMovements(string startDate, string endDate)
         {
 			try
 			{
@@ -49,7 +43,7 @@ namespace AccountOperations.Application
 
                     var tasks = customersAccount.Select(async customerAccount =>
                     {
-                        string? customerName = await _customerResources.GetName(customerAccount.Key);
+                        string customerName = await _customerResources.GetName(customerAccount.Key);
 
                         if (string.IsNullOrEmpty(customerName)) return;
 
@@ -73,7 +67,7 @@ namespace AccountOperations.Application
             }
 			catch (Exception ex)
 			{
-                _logger.LogError(ex, "Error on create customer.");
+                _logger.LogError(ex, "Error on generate report.");
                 throw;
 			}
         }

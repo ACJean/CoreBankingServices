@@ -67,14 +67,14 @@ namespace AccountOperations.Infrastructure.EF.Repository
                 });
         }
 
-        public Movements? GetById(int id)
+        public Movements GetById(int id)
         {
-            DbMovements? dbMovement = _context.Movements
+            DbMovements dbMovement = _context.Movements
                 .Include(c => c.Account)
                 .AsNoTracking()
                 .FirstOrDefault(c => c.Id == id);
 
-            Movements? entity = dbMovement != null ? new()
+            Movements entity = dbMovement != null ? new()
             {
                 Id = dbMovement.Id,
                 Date = dbMovement.Date,

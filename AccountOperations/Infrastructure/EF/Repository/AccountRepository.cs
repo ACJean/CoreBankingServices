@@ -67,14 +67,14 @@ namespace AccountOperations.Infrastructure.EF.Repository
                 });
         }
 
-        public Account? GetById(string id)
+        public Account GetById(string id)
         {
-            DbAccount? dbAccount = _context.Accounts
+            DbAccount dbAccount = _context.Accounts
                 .Include(c => c.Movements)
                 .AsNoTracking()
                 .FirstOrDefault(c => c.Number == id);
 
-            Account? entity = dbAccount != null ? new()
+            Account entity = dbAccount != null ? new()
             {
                 Number = dbAccount.Number,
                 CustomerIdentity = dbAccount.CustomerIdentity,

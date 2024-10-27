@@ -1,12 +1,8 @@
 ﻿using AccountOperations.Domain;
 using AccountOperations.Domain.Entity;
-using AccountOperations.Domain.Exceptions;
+using AccountOperations.Domain.Errors;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using SharedOperations.Domain;
 
 namespace AccountOperations.Application
 {
@@ -24,15 +20,14 @@ namespace AccountOperations.Application
             _accountService = accountService;
         }
 
-        public void Add(Movements movement)
+        public Result<Unit, Error> Add(Movements movement)
         {
             try
             {
-                Account? account = _accountService.Get(movement.AccountNumber) ?? throw new InvalidOperationException("Account not found.");
-
-                if ((account.Balance + movement.Amount) < 0)
+                Account account = _accountService.Get(movement.AccountNumber).Value;
+                if (account is null)
                 {
-                    throw new InvalidAccountMovementException("Saldo no disponible");
+                    return AccountErrors.NotFound;
                 }
 
                 _unitOfWork.BeginTransaction();
@@ -47,6 +42,8 @@ namespace AccountOperations.Application
                 _unitOfWork.Account.Update(account);
 
                 _unitOfWork.Commit();
+
+                return Unit.Value;
             }
             catch (Exception ex)
             {
@@ -56,7 +53,7 @@ namespace AccountOperations.Application
             }
         }
 
-        public Movements? Get(int id)
+        public Result<Movements, Error> Get(int id)
         {
             try
             {

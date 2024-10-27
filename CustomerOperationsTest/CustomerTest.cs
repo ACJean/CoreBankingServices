@@ -1,4 +1,3 @@
-using CustomerOperations.Domain;
 using CustomerOperations.Domain.Entity;
 using SharedOperations.Domain;
 using SharedOperations.Infrastructure;

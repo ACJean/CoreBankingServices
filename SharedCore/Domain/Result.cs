@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SharedOperations.Domain
+﻿namespace SharedOperations.Domain
 {
     public class Result<TValue, TError>
     {
 
-        public readonly TValue? Value;
-        public readonly TError? Error;
+        public readonly TValue Value;
+        public readonly TError Error;
 
         private readonly bool _isSuccess;
 
@@ -40,7 +34,7 @@ namespace SharedOperations.Domain
 
     }
 
-    public sealed record Error(string Code, string? Message = null);
+    public sealed record Error(string Code, string Message = null);
 
     public sealed class Unit
     {

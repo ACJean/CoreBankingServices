@@ -1,24 +1,19 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SharedOperations.Domain
 {
     public class DependencyInjectionConfig
     {
 
-        public IEnumerable<Dependency>? Dependencies { get; set; }
+        public IEnumerable<Dependency> Dependencies { get; set; }
 
         public static void Start(DependencyInjectionConfig config, IServiceCollection services)
         {
             if (config.Dependencies == null) return;
             foreach (var dependency in config.Dependencies)
             {
-                var serviceType = Type.GetType(dependency.Type);
-                var implementationType = Type.GetType(dependency.MapTo);
+                var serviceType = Type.GetType(dependency.Type) ?? throw new NullReferenceException($"Type {dependency.Type} not found");
+                var implementationType = Type.GetType(dependency.MapTo) ?? throw new NullReferenceException($"Type {dependency.MapTo} not found");
                 var lifetime = dependency.Lifetime switch
                 {
                     Lifetime.Scoped => ServiceLifetime.Scoped,

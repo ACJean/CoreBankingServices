@@ -1,17 +1,13 @@
 ﻿using AccountOperations.Domain.Entity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using SharedOperations.Domain;
 
 namespace AccountOperations.Application
 {
     public interface IMovementsService
     {
 
-        void Add(Movements movement);
-        Movements? Get(int id);
+        Result<Unit, Error> Add(Movements movement);
+        Result<Movements, Error> Get(int id);
 
     }
 }

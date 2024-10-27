@@ -1,16 +1,12 @@
 ﻿using AccountOperations.Domain.Entity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using SharedOperations.Domain;
 
 namespace AccountOperations.Application
 {
     public interface IReportService
     {
 
-        Task<IEnumerable<AccountMovement>> GetAccountMovements(string startDate, string endDate);
+        Task<Result<IEnumerable<AccountMovement>, Error>> GetAccountMovements(string startDate, string endDate);
 
     }
 }

@@ -1,6 +1,8 @@
 using AccountOperations.Application;
 using AccountOperations.Domain.Entity;
+using AccountTransactionService.Handler;
 using Microsoft.AspNetCore.Mvc;
+using SharedOperations.Domain;
 
 namespace AccountTransactionService.Controllers
 {
@@ -21,33 +23,35 @@ namespace AccountTransactionService.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] Account account)
         {
-            await _accountService.Add(account);
+            Result<Unit, Error> result = await _accountService.Add(account);
 
             var resourceUrl = $"/accounts/{account.Number}";
 
-            return Created(resourceUrl, null);
+            return ResultHandler.HandleResultCreated(result, resourceUrl);
         }
 
         [HttpGet("{accountNumber}")]
         public IActionResult Get([FromRoute] string accountNumber)
         {
-            return Ok(_accountService.Get(accountNumber));
+            Result<Account?, Error> result = _accountService.Get(accountNumber);
+
+            return ResultHandler.HandleResult(result);
         }
 
         [HttpPut("{accountNumber}")]
         public async Task<IActionResult> Update([FromRoute] string accountNumber, [FromBody] Account account)
         {
-            await _accountService.Update(accountNumber, account);
+            Result<Unit, Error> result = await _accountService.Update(accountNumber, account);
 
-            return Ok();
+            return ResultHandler.HandleResult(result);
         }
 
         [HttpDelete("{accountNumber}")]
         public IActionResult Delete([FromRoute] string accountNumber)
         {
-            _accountService.Delete(accountNumber);
+            Result<Unit, Error> result = _accountService.Delete(accountNumber);
 
-            return Ok();
+            return ResultHandler.HandleResult(result);
         }
     }
 }

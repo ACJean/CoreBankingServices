@@ -1,13 +1,8 @@
 ﻿using SharedOperations.Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace CustomerOperations.Domain.Errors
+namespace SharedOperations.Errors
 {
-    internal class CustomerErrors
+    public class CustomerErrors
     {
 
         public static readonly Error NotFound = new("Customer.NotFound", 
