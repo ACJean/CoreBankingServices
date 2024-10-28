@@ -9,10 +9,12 @@ namespace CustomerOperations.Infrastructure.EF.Repository
     {
 
         protected readonly CustomerDbContext _context;
+        private readonly IServiceProvider _serviceProvider;
 
-        public CustomerRepository(CustomerDbContext context) 
+        public CustomerRepository(CustomerDbContext context, IServiceProvider serviceProvider) 
         {
             _context = context;
+            _serviceProvider = serviceProvider;
         }
 
         public int Add(Customer entity)
@@ -21,7 +23,7 @@ namespace CustomerOperations.Infrastructure.EF.Repository
             {
                 PersonId = entity.PersonId,
                 Password = entity.Password,
-                State = 1
+                State = entity.State
             };
             
             _context.Set<DbCustomer>().Add(customer);
@@ -58,7 +60,7 @@ namespace CustomerOperations.Infrastructure.EF.Repository
                 .ToList()
                 .Select(dbCustomer =>
                 {
-                    return new Customer 
+                    Customer customer = new ()
                     { 
                         CustomerId = dbCustomer.Id,
                         PersonId = dbCustomer.PersonId,
@@ -67,10 +69,12 @@ namespace CustomerOperations.Infrastructure.EF.Repository
                         Age = dbCustomer.Person.Age,
                         IdentityNumber = dbCustomer.Person.IdentityNumber,
                         Address = dbCustomer.Person.Address,
-                        PhoneNumber = dbCustomer.Person.PhoneNumber,
-                        Password = dbCustomer.Password,
                         State = dbCustomer.State
                     };
+                    customer.SetPhoneNumber(dbCustomer.Person.PhoneNumber);
+                    customer.SetPassword(dbCustomer.Password);
+
+                    return customer;
                 });
         }
 
@@ -90,10 +94,14 @@ namespace CustomerOperations.Infrastructure.EF.Repository
                 Age = customer.Person.Age,
                 IdentityNumber = customer.Person.IdentityNumber,
                 Address = customer.Person.Address,
-                PhoneNumber = customer.Person.PhoneNumber,
-                Password = customer.Password,
                 State = customer.State
             } : null;
+
+            if (entity is not null)
+            {
+                entity.SetPhoneNumber(customer.Person.PhoneNumber);
+                entity.SetPassword(customer.Password);
+            }
 
             return entity;
         }
@@ -114,10 +122,14 @@ namespace CustomerOperations.Infrastructure.EF.Repository
                 Age = customer.Person.Age,
                 IdentityNumber = customer.Person.IdentityNumber,
                 Address = customer.Person.Address,
-                PhoneNumber = customer.Person.PhoneNumber,
-                Password = customer.Password,
                 State = customer.State
             } : null;
+
+            if (entity is not null)
+            {
+                entity.SetPhoneNumber(customer.Person.PhoneNumber);
+                entity.SetPassword(customer.Password);
+            }
 
             return entity;
         }

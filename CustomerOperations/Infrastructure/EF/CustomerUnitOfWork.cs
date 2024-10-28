@@ -14,10 +14,10 @@ namespace CustomerOperations.Infrastructure.EF
         public ICustomerRepository Customers { get; private set; }
         public IPersonRepository Persons { get; private set; }
 
-        public CustomerUnitOfWork(CustomerDbContext context)
+        public CustomerUnitOfWork(CustomerDbContext context, IServiceProvider serviceProvider)
         {
             _context = context;
-            Customers = new CustomerRepository(_context);
+            Customers = new CustomerRepository(_context, serviceProvider);
             Persons = new PersonRepository(_context);
         }
 

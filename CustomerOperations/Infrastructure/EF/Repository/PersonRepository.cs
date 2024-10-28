@@ -45,16 +45,19 @@ namespace CustomerOperations.Infrastructure.EF.Repository
                 .ToList()
                 .Select(dbPerson =>
                 {
-                    return new Person
+                    Person person = new ()
                     {
                         PersonId = dbPerson.Id,
                         Name = dbPerson.Name,
                         Gender = dbPerson.Gender,
                         Age = dbPerson.Age,
                         IdentityNumber = dbPerson.IdentityNumber,
-                        Address = dbPerson.Address,
-                        PhoneNumber = dbPerson.PhoneNumber
+                        Address = dbPerson.Address
                     };
+
+                    person.SetPhoneNumber(dbPerson.PhoneNumber);
+
+                    return person;
                 });
         }
 
@@ -70,8 +73,12 @@ namespace CustomerOperations.Infrastructure.EF.Repository
                 Age = dbPerson.Age,
                 IdentityNumber = dbPerson.IdentityNumber,
                 Address = dbPerson.Address,
-                PhoneNumber = dbPerson.PhoneNumber
             } : null;
+
+            if (person is not null)
+            {
+                person.SetPhoneNumber(dbPerson.PhoneNumber);
+            }
 
             return person;
         }

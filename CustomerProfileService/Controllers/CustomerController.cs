@@ -1,5 +1,5 @@
-using CustomerOperations.Application;
-using CustomerOperations.Domain.Entity;
+using CustomerOperations.Application.Dto;
+using CustomerOperations.Application.Service;
 using CustomerProfileService.Handler;
 using Microsoft.AspNetCore.Mvc;
 using SharedOperations.Domain;
@@ -21,7 +21,7 @@ namespace CustomerProfileService.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] Customer customer)
+        public IActionResult Create([FromBody] CustomerCreateDto customer)
         {
             Result<Unit, Error> result = _customerService.Add(customer);
 
@@ -33,16 +33,16 @@ namespace CustomerProfileService.Controllers
         [HttpGet("{identityNumber}")]
         public IActionResult Get([FromRoute] string identityNumber)
         {   
-            Result<Customer?, Error> result = _customerService.Get(identityNumber);
+            Result<CustomerDto, Error> result = _customerService.Get(identityNumber);
 
             return ResultHandler.HandleResult(result);
         }
 
         [HttpPut("{identityNumber}")]
-        public IActionResult Update([FromRoute] string identityNumber, [FromBody] Customer customer)
+        public IActionResult Update([FromRoute] string identityNumber, [FromBody] CustomerUpdateDto customer)
         {
 
-            Result<Unit, Error> result = _customerService.Update(customer);
+            Result<Unit, Error> result = _customerService.Update(identityNumber, customer);
 
             return ResultHandler.HandleResult(result);
         }
