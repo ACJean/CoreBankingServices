@@ -13,7 +13,8 @@ namespace AccountTransactionService.Handler
                 return new BadRequestObjectResult(result.Error);
             }
 
-            return new OkObjectResult(result.Value);
+            if (result.Value is Unit) return new OkResult();
+            else return new OkObjectResult(result.Value);
         }
 
         public static IActionResult HandleResultCreated<TValue, TError>(Result<TValue, TError> result, string location)

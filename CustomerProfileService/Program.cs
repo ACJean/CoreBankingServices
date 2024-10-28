@@ -1,11 +1,23 @@
-using CustomerOperations.Application;
+using CustomerOperations.Application.Service;
 using CustomerOperations.Domain;
 using CustomerOperations.Infrastructure.EF;
 using CustomerProfileService.Filters;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
+using SharedOperations.Application.Service;
+using SharedOperations.Domain.Validator;
 
 var builder = WebApplication.CreateBuilder(args);
+
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .Enrich.FromLogContext()
+    .Enrich.WithProperty("App", "CustomerProfileService")
+    .WriteTo.Seq(builder.Configuration["SeqUrl"])
+    .CreateLogger();
+
+builder.Host.UseSerilog();
 
 builder.Services.Configure<ApiBehaviorOptions>(options =>
 {
@@ -28,6 +40,9 @@ builder.Services.AddDbContext<CustomerDbContext>(options =>
 builder.Services.AddScoped<ICustomerUnitOfWork, CustomerUnitOfWork>();
 
 builder.Services.AddScoped<ICustomerService, DefaultCustomerService>();
+
+builder.Services.AddTransient<IPasswordValidator, DefaultPasswordValidator>();
+builder.Services.AddTransient<IPhoneNumberValidator, DefaultPhoneNumberValidator>();
 
 var app = builder.Build();
 

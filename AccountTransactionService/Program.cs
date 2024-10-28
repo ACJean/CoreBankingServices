@@ -5,10 +5,20 @@ using AccountOperations.Infrastructure.EF;
 using AccountTransactionService.Filters;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 using SharedOperations.Domain.Services;
 using SharedOperations.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
+
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .Enrich.FromLogContext()
+    .Enrich.WithProperty("App", "AccountTransactionService")
+    .WriteTo.Seq(builder.Configuration["SeqUrl"])
+    .CreateLogger();
+
+builder.Host.UseSerilog();
 
 builder.Services.Configure<ApiBehaviorOptions>(options =>
 {

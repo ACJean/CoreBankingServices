@@ -11,10 +11,12 @@ namespace AccountTransactionService.Controllers
     [Route("/reports")]
     public class ReportController : ControllerBase
     {
+        private readonly ILogger<ReportController> _logger;
         private readonly IReportService _reportService;
 
-        public ReportController(IReportService reportService)
+        public ReportController(ILogger<ReportController> logger, IReportService reportService)
         {
+            _logger = logger;
             _reportService = reportService;
         }
 
