@@ -1,43 +1,37 @@
 using CustomerOperations.Domain.Entity;
+using Moq;
 using SharedOperations.Domain;
-using SharedOperations.Infrastructure;
+using SharedOperations.Domain.Validator;
 
 namespace CustomerOperationsTest
 {
     public class CustomerTests
     {
         [Fact]
-        public void IsValidPassword_ValidPassword_ReturnsTrue()
+        public void SetPassword_ShouldSetPassword_WhenPasswordIsValid()
         {
-            IPasswordValidator passwordValidator = new DefaultPasswordValidator();
+            var customer = new Customer();
+            var password = "ValidPassword123";
+            var mockValidator = new Mock<IPasswordValidator>();
+            mockValidator.Setup(v => v.IsValid(password)).Returns(Unit.Value);
 
-            var customer = new Customer
-            {
-                Password = "ValidPassword.123"
-            };
+            var result = customer.SetPassword(password, mockValidator.Object);
 
-            // Act
-            var result = customer.IsValidPassword(passwordValidator);
-
-            // Assert
-            Assert.True(result);
+            Assert.NotNull(result.Value);
         }
 
         [Fact]
-        public void IsValidPassword_InvalidPassword_ReturnsFalse()
+        public void SetPassword_ShouldNotSetPassword_WhenPasswordIsInvalid()
         {
-            IPasswordValidator passwordValidator = new DefaultPasswordValidator();
+            var customer = new Customer();
+            var password = "InvalidPassword";
+            var mockValidator = new Mock<IPasswordValidator>();
+            var error = new Error("InvalidPassword", "The password does not meet the criteria.");
+            mockValidator.Setup(v => v.IsValid(password)).Returns(error);
 
-            var customer = new Customer
-            {
-                Password = "InvalidPassword"
-            };
+            var result = customer.SetPassword(password, mockValidator.Object);
 
-            // Act
-            var result = customer.IsValidPassword(passwordValidator);
-
-            // Assert
-            Assert.False(result);
+            Assert.Null(result.Value);
         }
     }
 }
